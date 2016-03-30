@@ -74,7 +74,7 @@ def setMusic(PicLoc, soundLoc):
     """
     This is where we hide the picture inside the sound file.
     """
-    if True:
+    try:
         loadPic = Image.open(str(picLoc),"r")#Loading up the pic we want to hide.
         width = loadPic.size[0] #Getting the width of the pic
         height = loadPic.size[1] #Getting the height of the pic
@@ -91,36 +91,38 @@ def setMusic(PicLoc, soundLoc):
 
         rgb = gettingPixelValues(picLoc) #Calling our gettingPixelValues function
 
-        #This runs through each sample in the sound file and assigns the RGB value of the pic to the sample.
+        if(len(rgb) < len(data)):
+	        #This runs through each sample in the sound file and assigns the RGB value of the pic to the sample.
 
-        print "Setting values"
+	        print "Setting values"
 
-        for x in range(1, width * height * 3):
-            if(x % 2 == 0):
-                data[x][0]= rgb[count]/offset
-            else:
-                data[x][1]=rgb[count]/offset
+	        for x in range(1, width * height * 3):
+	            if(x % 2 == 0):
+	                data[x][0]= rgb[count]/offset
+	            else:
+	                data[x][1]=rgb[count]/offset
 
 
-            count+=1
+	            count+=1
 
-        for y in range(width * height * 3, len(data)):
-            if(y % 2 == 0):
-                data[y][0]= 0
-            else:
-                data[y][1]= 0
-                
-        data[0][0] = width / offsetW_H
-        data[0][1] = height / offsetW_H
-        
-        '''
-        print (data[:6])
-        '''
-        #We create our new sound file containing our image.
-        filePath = "Embedded_Soundfiles/embeddedSound.wav"
-        sf.write(filePath, data, samplerate)
-        print "Picture embedded"
-    else:
+	        for y in range(width * height * 3, len(data)):
+	            if(y % 2 == 0):
+	                data[y][0]= 0
+	            else:
+	                data[y][1]= 0
+	                
+	        data[0][0] = width / offsetW_H
+	        data[0][1] = height / offsetW_H
+	        
+	        '''
+	        print (data[:6])
+	        '''
+	        #We create our new sound file containing our image.
+	        sf.write("Embedded_Soundfiles/embeddedSound.wav", data, samplerate)
+	        print "Picture embedded"
+        else:
+	    	tkMessageBox.showwarning("Error", "Image is too large to be stored inside file")
+    except:
         tkMessageBox.showwarning("Error", "No Image selected")
 
 ########################################################################################
@@ -158,10 +160,10 @@ offsetW_H = 10000.0
 picLoc = ""
 soundLoc = ""
 
-if(not os.path.exists("Extracted Photos")):
-    os.mkdir("Extracted Photos")
-if(not os.path.exists("Embedded Soundfiles")):
-    os.mkdir("Embedded Soundfiles")
+if(not os.path.exists("Extracted_Photos")):
+    os.mkdir("Extracted_Photos")
+if(not os.path.exists("Embedded_Soundfiles")):
+    os.mkdir("Embedded_Soundfiles")
 
 
 
@@ -175,27 +177,27 @@ def chooseFile(a):
     # Files are chosen
     if (a==0):
         tkMessageBox.showinfo("SneakyBits", "Make sure the file is a .png or .jpg format")
-        picLoc = filedialog.askopenfilename()
-        formatSuffix = picLoc[len(picLoc) - 3:len(picLoc)]
-        formatSuffix = formatSuffix.lower()
-        while(formatSuffix != "png" and formatSuffix != "jpg"):
-            tkMessageBox.showwarning("Error","Has to be .png or .jpg format")
-            picLoc = filedialog.askopenfilename()
-            if(picLoc == ""):
-                break
+        searching = True
+        while(searching):
+	        picLoc = filedialog.askopenfilename()
+	        picFormatSuffix = picLoc[len(picLoc) - 3:len(picLoc)]
+	        picFormatSuffix = picFormatSuffix.lower()     
+	        if(picFormatSuffix != "png" and picFormatSuffix != "jpg" and picFormatSuffix != ""):
+	            tkMessageBox.showwarning("Error","Has to be .png or .jpg format")
+	        else:
+	        	searching = False
+	  
     elif (a==1):
         tkMessageBox.showinfo("SneakyBits", "Make sure the file is a .wav format")
-        soundLoc = filedialog.askopenfilename()
-        formatSuffix = picLoc[len(soundLoc) - 3:len(soundLoc)]
-        formatSuffix = formatSuffix.lower()
-        while(soundLoc[len(soundLoc) - 3:len(soundLoc)] != "wav"):
-            tkMessageBox.showwarning("Error","Has to be .wav format")
-            soundLoc = filedialog.askopenfilename()
-            if(soundLoc == ""):
-                break
-
-    print (picLoc)
-    return picLoc
+        searching = True
+        while(searching):
+	        soundLoc = filedialog.askopenfilename()
+	        soundFormatSuffix = soundLoc[len(soundLoc) - 3:len(soundLoc)]
+	        soundFormatSuffix = soundFormatSuffix.lower()
+	        if(soundFormatSuffix != "wav" and soundFormatSuffix != ""):
+	            tkMessageBox.showwarning("Error","Has to be .wav format")
+	        else:
+	        	searching = False
 
 class Page(tk.Frame):
     def __init__(self, *args, **kwargs):
