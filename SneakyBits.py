@@ -159,7 +159,7 @@ offset = 165000.0
 offsetW_H = 10000.0
 picLoc = ""
 soundLoc = ""
-
+#Creates directories
 if(not os.path.exists("Extracted_Photos")):
     os.mkdir("Extracted_Photos")
 if(not os.path.exists("Embedded_Soundfiles")):
@@ -186,7 +186,8 @@ def chooseFile(a):
 	            tkMessageBox.showwarning("Error","Has to be .png or .jpg format")
 	        else:
 	        	searching = False
-	  
+	if(picLoc != ""):
+                    tkMessageBox.showinfo("SneakyBits", "Image Selected!")  
     elif (a==1):
         tkMessageBox.showinfo("SneakyBits", "Make sure the file is a .wav format")
         searching = True
@@ -198,6 +199,8 @@ def chooseFile(a):
 	            tkMessageBox.showwarning("Error","Has to be .wav format")
 	        else:
 	        	searching = False
+    if(soundLoc != ""):
+                    tkMessageBox.showinfo("SneakyBits", "Sound Selected!")
 
 class Page(tk.Frame):
     def __init__(self, *args, **kwargs):
