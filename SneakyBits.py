@@ -67,6 +67,8 @@ def newImage(picLoc, soundLoc):
         #pic.show()#Displaying our picture
         pic.save("Extracted_Photos/newImage.bmp") # New Image
         print "Extraction complete"
+        tkMessageBox.showinfo("Sneaky Bits", "Extraction Successful!")
+        tkMessageBox.showinfo("Sneaky Bits", "Extracted Image can be found in Extracted_Photos/newImage.bmp")
     except:
         tkMessageBox.showwarning("Error", "No Sound selected")
 ##########################################################################################
@@ -119,7 +121,7 @@ def setMusic(PicLoc, soundLoc):
 	        '''
 	        #We create our new sound file containing our image.
 	        sf.write("Embedded_Soundfiles/embeddedSound.wav", data, samplerate)
-	        print "Picture embedded"
+	        tkMessageBox.showinfo("Sneaky Bits", "Embeddeding Successful!")
         else:
 	    	tkMessageBox.showwarning("Error", "Image is too large to be stored inside file")
     except:
