@@ -1,13 +1,16 @@
 
 """
+Authors:
+    Mario Martinez, Samuel Sanchez, Austin Martinez
+
 Program summary:
 
-This program takes in a sound file and a picture.
-We grab the pixel values (red, green, blue) from the
-picture and hide those values inside the channels of
-the sound file. The program then creates a new sound file containing
-the hidden image. Furthermore, this program is also able
-to retrieve the image from the sound file that contains the image.
+    This program takes in a sound file and a picture.
+    We grab the pixel values (red, green, blue) from the
+    picture and hide those values inside the channels of
+    the sound file. The program then creates a new sound file containing
+    the hidden image. Furthermore, this program is also able
+    to retrieve the image from the sound file that contains the image.
 
 LINUX VARIANT/ Python 2.7
 """
